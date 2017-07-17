@@ -1,0 +1,20 @@
+{
+  "name": "filter-params",
+  "version": "1.0.0",
+  "description": "Helper class to aid handle request parameters",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "validation",
+    "params",
+    "request"
+  ],
+  "author": "Luiz Zamboni",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.0",
+    "mocha": "^3.4.2"
+  }
+}
