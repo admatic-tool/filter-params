@@ -35,6 +35,18 @@ describe("FilterParams", () => {
         expect(error.message).to.be.eql("name is required")
       })
 
+      it("null attribute raise error with rest too", () => {
+        let error
+
+        try {
+          filter.req("name")
+        } catch(err) {
+          error = err
+        }
+
+        expect(error.message).to.be.eql("name is required")
+      })
+
       it("undefined attribute raise error", () => {
 
         let error
@@ -47,11 +59,30 @@ describe("FilterParams", () => {
 
         expect(error.message).to.be.eql("not_exists is required")
       })
+
+      it("undefined attribute raise error with rest", () => {
+
+        let error
+
+        try {
+          filter.req("not_exists")
+        } catch(err) {
+          error = err
+        }
+
+        expect(error.message).to.be.eql("not_exists is required")
+      })
+
+
     })
 
     context("valid attributes", () => {
       it("false value is a valid value", () => {
         filter.req([ "isValid" ]).commit()
+      })
+
+      it("works with rest params too", () => {
+        filter.req("isValid").commit()
       })
     })
   })
@@ -62,11 +93,23 @@ describe("FilterParams", () => {
 
       expect(params).to.have.all.keys("isValid")
     })
+
+    it("works with rest params too", () => {
+      const params = filter.permit("isValid").commit()
+
+      expect(params).to.have.all.keys("isValid")
+    })
   })
 
   describe("#exclude", () => {
     it("exclude indicated keys", () => {
       const params = filter.exclude([ "isValid" ]).commit()
+
+      expect(params).to.have.all.keys("user_id", "email", "name")
+    })
+
+    it("works with rest params too", () => {
+      const params = filter.exclude("isValid").commit()
 
       expect(params).to.have.all.keys("user_id", "email", "name")
     })

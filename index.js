@@ -7,7 +7,8 @@ module.exports = class FilterParams {
     this.params = params
   }
 
-  req(strings) {
+  req(...strings) {
+    
     strings.forEach(param => {
       const value = this.params[param]
       if (!value && typeof(value) !== "boolean")
@@ -16,7 +17,7 @@ module.exports = class FilterParams {
     return this
   }
 
-  permit(strings) {
+  permit(...strings) {
     let tempParams = {}
     strings.forEach(param => {
       /* not elimine false or null params */
@@ -28,7 +29,7 @@ module.exports = class FilterParams {
     return this
   }
 
-  exclude(strings) {
+  exclude(...strings) {
     strings.forEach(param => {
       if (param in this.params)
         delete this.params[param]
