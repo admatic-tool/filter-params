@@ -10,9 +10,11 @@ describe("FilterParams", () => {
     email: "xxx@email.com",
     name: null,
     isValid: false,
+    emptyString: "",
     zero: 0,
     zeroString: "0",
-    emptyString: "",
+    zeroFloat: 0.0,
+    float: 0.1,
   }
 
   let filter
@@ -88,14 +90,6 @@ describe("FilterParams", () => {
         expect(error.message).to.be.eql("emptyString is required")
       })
 
-      it("zero attribute dont raise error", () => {
-        filter.req([ "zero" ]).commit()
-      })
-
-      it("string zero attribute dont raise error", () => {
-        filter.req([ "zeroString" ]).commit()
-      })
-
     })
 
     context("valid attributes", () => {
@@ -105,6 +99,22 @@ describe("FilterParams", () => {
 
       it("works with rest params too", () => {
         filter.req("isValid").commit()
+      })
+
+      it("zero attribute is a valid value", () => {
+        filter.req([ "zero" ]).commit()
+      })
+
+      it("string zero attribute is a valid value", () => {
+        filter.req([ "zeroString" ]).commit()
+      })
+
+      it("zero float is a valid value", () => {
+        filter.req([ "zeroFloat" ]).commit()
+      })
+
+      it("float number is a valid value", () => {
+        filter.req([ "float" ]).commit()
       })
     })
   })
@@ -127,13 +137,13 @@ describe("FilterParams", () => {
     it("exclude indicated keys", () => {
       const params = filter.exclude([ "isValid" ]).commit()
 
-      expect(params).to.have.all.keys("user_id", "email", "name", "zero", "zeroString", "emptyString")
+      expect(params).to.have.all.keys("user_id", "email", "name", "zero", "emptyString", "zeroString", "zeroFloat", "float")
     })
 
     it("works with rest params too", () => {
       const params = filter.exclude("isValid").commit()
 
-      expect(params).to.have.all.keys("user_id", "email", "name", "zero", "zeroString", "emptyString")
+      expect(params).to.have.all.keys("user_id", "email", "name", "zero", "emptyString", "zeroString", "zeroFloat", "float")
     })
   })
 
