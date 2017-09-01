@@ -10,6 +10,9 @@ describe("FilterParams", () => {
     email: "xxx@email.com",
     name: null,
     isValid: false,
+    zero: 0,
+    zeroString: "0",
+    emptyString: "",
   }
 
   let filter
@@ -73,6 +76,25 @@ describe("FilterParams", () => {
         expect(error.message).to.be.eql("not_exists is required")
       })
 
+      it("empty string raise error", () => {
+        let error
+
+        try {
+          filter.req("emptyString")
+        } catch(err) {
+          error = err
+        }
+
+        expect(error.message).to.be.eql("emptyString is required")
+      })
+
+      it("zero attribute dont raise error", () => {
+        filter.req([ "zero" ]).commit()
+      })
+
+      it("string zero attribute dont raise error", () => {
+        filter.req([ "zeroString" ]).commit()
+      })
 
     })
 
@@ -105,13 +127,13 @@ describe("FilterParams", () => {
     it("exclude indicated keys", () => {
       const params = filter.exclude([ "isValid" ]).commit()
 
-      expect(params).to.have.all.keys("user_id", "email", "name")
+      expect(params).to.have.all.keys("user_id", "email", "name", "zero", "zeroString", "emptyString")
     })
 
     it("works with rest params too", () => {
       const params = filter.exclude("isValid").commit()
 
-      expect(params).to.have.all.keys("user_id", "email", "name")
+      expect(params).to.have.all.keys("user_id", "email", "name", "zero", "zeroString", "emptyString")
     })
   })
 
