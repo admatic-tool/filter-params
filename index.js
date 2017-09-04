@@ -8,10 +8,9 @@ module.exports = class FilterParams {
   }
 
   req(...strings) {
-    
     strings.forEach(param => {
       const value = this.params[param]
-      if (!value && typeof(value) !== "boolean")
+      if (typeof value !== "boolean" && typeof value !== "number" && !value)
         throw new Error(`${param} is required`)
     })
     return this
