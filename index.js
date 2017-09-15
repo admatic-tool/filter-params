@@ -1,5 +1,6 @@
 "use strict"
 
+const _ = require("underscore")
 
 module.exports = class FilterParams {
 
@@ -8,7 +9,7 @@ module.exports = class FilterParams {
   }
 
   req(...strings) {
-    strings.forEach(param => {
+    _.flatten(strings).forEach(param => {
       const value = this.params[param]
       if (typeof value !== "boolean" && typeof value !== "number" && !value)
         throw new Error(`${param} is required`)

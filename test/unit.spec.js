@@ -105,6 +105,10 @@ describe("FilterParams", () => {
         filter.req([ "zero" ]).commit()
       })
 
+      it("zero attribute is a valid value (rest)", () => {
+        filter.req("zero").commit()
+      })
+
       it("string zero attribute is a valid value", () => {
         filter.req([ "zeroString" ]).commit()
       })
@@ -115,6 +119,16 @@ describe("FilterParams", () => {
 
       it("float number is a valid value", () => {
         filter.req([ "float" ]).commit()
+      })
+    })
+
+    context("only some parameters required", () => {
+      it("should work", () => {
+        filter.req("isValid", "zero", "float").commit()
+      })
+
+      it("should work with rest too", () => {
+        filter.req([ "isValid", "zero", "float" ]).commit()
       })
     })
   })
