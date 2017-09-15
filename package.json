@@ -1,6 +1,6 @@
 {
   "name": "filter-params",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Helper class to aid handle request parameters",
   "main": "index.js",
   "scripts": {
