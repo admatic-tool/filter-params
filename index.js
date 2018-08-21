@@ -19,7 +19,7 @@ module.exports = class FilterParams {
 
   permit(...strings) {
     let tempParams = {}
-    strings.forEach(param => {
+    _.flatten(strings).forEach(param => {
       /* not elimine false or null params */
       if (this.params[param] !== undefined)
         tempParams[param] = this.params[param]
@@ -30,9 +30,17 @@ module.exports = class FilterParams {
   }
 
   exclude(...strings) {
-    strings.forEach(param => {
+    _.flatten(strings).forEach(param => {
       if (param in this.params)
         delete this.params[param]
+    })
+    return this
+  }
+
+  forbid(...strings) {
+    _.flatten(strings).forEach(param => {
+      if (param in this.params)
+        throw new Error(`${param} is forbidden`)
     })
     return this
   }

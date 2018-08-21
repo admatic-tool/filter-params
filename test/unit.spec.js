@@ -23,6 +23,17 @@ describe("FilterParams", () => {
     filter = new FilterParams(attrs)
   })
 
+  describe("#forbid", () => {
+
+    it("forbid values with an error", () => {
+      expect(() => filter.forbid([ "isValid" ]).commit()).to.throw("isValid is forbidden")
+    })
+
+    it("works with rest params too", () => {
+      expect(() => filter.forbid("isValid").commit()).to.throw("isValid is forbidden")
+    })
+  })
+
   describe("#req", () => {
 
     context("when not found attribute", () => {
